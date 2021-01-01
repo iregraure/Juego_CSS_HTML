@@ -26,6 +26,8 @@
     --total-dianas: 8;
     --duracion-animacion-diana: 2.5s;
     --retraso-puntos: calc(var(--duracion-animacion-diana) * var(--total-dianas));
+    /* Definimos un cursor personalizado */
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86 86" width="42" height="42"><path d="M42.998 0C19.252 0 0 19.252 0 43c0 23.749 19.252 43 42.998 43C66.748 86 86 66.749 86 43 86 19.252 66.748 0 42.998 0zM46.5 77.825V58.5h-7.002v19.325C22.965 76.184 9.818 63.035 8.176 46.5H27.5v-7.002H8.176C9.818 22.964 22.965 9.816 39.498 8.175V27.5H46.5V8.175c16.537 1.642 29.684 14.79 31.326 31.323H58.5V46.5h19.326C76.184 63.035 63.037 76.182 46.5 77.825z" fill="%2353FF45"/></svg>') 21 21, crosshair;
 }
 
 *,
@@ -33,6 +35,8 @@
 *:after
 {
     box-sizing: border-box;  
+    /* Hacemos que todos los elementos hereden el cursor personalizado */
+    cursor: inherit;
 }
 
 /* Ocultamos los checkbox */
