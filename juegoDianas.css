@@ -22,6 +22,10 @@
     --diana-total-size: calc(var(--diana-size) + var(--diana-sombra-size) * 2);
     --color-diana: red;
     --color-diana-extra: gold;
+    /* Variables para la animación de las dianas */
+    --total-dianas: 8;
+    --duracion-animacion-diana: 2.5s;
+    --retraso-puntos: calc(var(--duracion-animacion-diana) * var(--total-dianas));
 }
 
 *,
@@ -49,6 +53,8 @@
 .input-diana:checked + .diana
 {
     pointer-events: none;
+    /* Cuando se hace clic en la diana se pausa la animación */
+    animation-play-state: paused;
 }
 
 /* Al hacer clic en la diana cambiamos el color del gradiente a gris, hacemos que desaparezca
@@ -74,9 +80,16 @@
 /* Posicionamos las dianas de forma relativa */
 .diana
 {
-    position: relative;
-    display: inline-block;
     --puntos: var(--puntos-diana);
+    /* Posicionamos las dianas fuera de vista por arriba */
+    position: absolute;
+    top: calc(-1 * var(--diana-total-size));
+    /* Propiedades de la animación */
+    animation-name: movimiento-diana;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+    animation-duration: var(--duracion-animacion-diana);
+    animation-delay: calc(var(--duracion-animacion-diana) * (var(--index) - 1));
 }
 
 /* Damos estilo a la diana */
@@ -104,7 +117,6 @@
         var(--color) 0
     );
     box-shadow: 4px 4px var(--diana-sombra-size) rgba(0, 0, 0, 0.4);
-    transition: opacity 0.8s ease-out, transform 0.1s ease-in;
 }
 
 /* Mostramos la puntuación detrás de cada diana */
@@ -123,6 +135,55 @@
     text-shadow: 2px 2px 0 var(--accent-color);
     font-size: 1.7rem;
     opacity: 0;
+}
+
+/* Indicamos la posición horizontal para cada diana */
+.diana:nth-of-type(1)
+{
+    --index: 1;
+    left: 70%;
+}
+
+.diana:nth-of-type(2)
+{
+    --index: 2;
+    left: 25%;
+}
+
+.diana:nth-of-type(3)
+{
+    --index: 3;
+    left: 30%;
+}
+
+.diana:nth-of-type(4)
+{
+    --index: 4;
+    left: 90%;
+}
+
+.diana:nth-of-type(5)
+{
+    --index: 5;
+    left: 50%;
+}
+
+.diana:nth-of-type(6)
+{
+    --index: 6;
+    left: 80%;
+}
+
+.diana:nth-of-type(7)
+{
+    --index: 7;
+    left: 10%;
+}
+
+.diana:nth-of-type(8)
+{
+    --index: 8;
+    left: 65%;
 }
 
 .diana.extra
@@ -153,10 +214,6 @@
 */
 body
 {
-    /* display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh; */
     /* Evitamos que se vea el scroll */
     overflow: hidden;
     /* Damos estilo a la fuente */
@@ -189,6 +246,8 @@ body
     text-shadow: 2px 2px 0 red;
     /* Permitimos que se haga clic en las dianas que pasan por debajo del marcador */
     pointer-events: none;
+    /* Añadimos la animación de la puntuación */
+    animation: puntos-final 0.5s ease-in-out var(--retraso-puntos) forwards;
 }
 
 @keyframes ocultar-diana
@@ -202,6 +261,7 @@ body
         opacity: 0;
     }
 }
+
 @keyframes muestra-puntos
 {
     10%
@@ -212,5 +272,21 @@ body
     100%
     {
         opacity: 0;
+    }
+}
+
+@keyframes movimiento-diana
+{
+    100%
+    {
+        transform: translateY(calc(102vh + var(--diana-total-size)));
+    }
+}
+
+@keyframes puntos-final
+{
+    100%
+    {
+        transform: translateY(calc(100% - 50vh)) scale(2.5);
     }
 }
