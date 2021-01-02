@@ -39,6 +39,70 @@
     cursor: inherit;
 }
 
+body
+{
+    /* Evitamos que se vea el scroll */
+    overflow: hidden;
+    /* Damos estilo a la fuente */
+    font-family: 'Press Start 2P', sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    /* Evitamos que se puedan seleccionar objetos */
+    user-select: none;
+}
+
+/* Estilos para el enlace para empezar la partida */
+#start
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-color);
+    text-shadow: 2px 2px 0 red;
+    background-color: var(--bg-color);
+}
+
+/* Ocultamos el enlace después de hacer clicpara mostrar el juego */
+#juego:target #start
+{
+    display: none;
+}
+
+/* Animamos el texto del inicio */
+.texto-start
+{
+    animation: pulse 1.2s ease-out infinite;
+}
+
+/* Estilo para el emoji */
+.emoji-start
+{
+    display: inline-block;
+    margin-left: 0.5em;
+    font-size: 1.4em;
+    text-shadow: none;
+}
+
+/* Activamos la animación de las dianas después del clic */
+#juego:target .diana
+{
+    animation-name: movimiento-diana;
+}
+
+/* Activamos la animación del marcador después del clic */
+#juego:target #puntos
+{
+    animation: puntos-final 0.5s ease-in-out var(--retraso-puntos) forwards;
+}
+
 /* Ocultamos los checkbox */
 .input-diana 
 {
@@ -89,8 +153,6 @@
     position: absolute;
     top: calc(-1 * var(--diana-total-size));
     /* Propiedades de la animación */
-    animation-name: movimiento-diana;
-    animation-fill-mode: forwards;
     animation-timing-function: ease-out;
     animation-duration: var(--duracion-animacion-diana);
     animation-delay: calc(var(--duracion-animacion-diana) * (var(--index) - 1));
@@ -207,32 +269,6 @@
     --puntos-str: var(--puntos-diana-extra-str);
 }
 
-/* Mostramos la puntuación */
-#puntos:before
-{
-    content: counter(puntos);
-}
-
-/* 
-    ESTILOS PARA QUE SE VEA "BONITO"
-*/
-body
-{
-    /* Evitamos que se vea el scroll */
-    overflow: hidden;
-    /* Damos estilo a la fuente */
-    font-family: 'Press Start 2P', sans-serif;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-    /* Evitamos que se puedan seleccionar objetos */
-    user-select: none;
-}
-
-.diana
-{
-    margin: 0 20px 20px 0;
-}
-
 #puntos
 {
     text-align: center;
@@ -250,8 +286,12 @@ body
     text-shadow: 2px 2px 0 red;
     /* Permitimos que se haga clic en las dianas que pasan por debajo del marcador */
     pointer-events: none;
-    /* Añadimos la animación de la puntuación */
-    animation: puntos-final 0.5s ease-in-out var(--retraso-puntos) forwards;
+}
+
+/* Mostramos la puntuación */
+#puntos:before
+{
+    content: counter(puntos);
 }
 
 @keyframes ocultar-diana
@@ -292,5 +332,17 @@ body
     100%
     {
         transform: translateY(calc(100% - 50vh)) scale(2.5);
+    }
+}
+
+@keyframes pulse
+{
+    30%
+    {
+        opacity: 0;
+    }
+    60%
+    {
+        opacity: 1;
     }
 }
